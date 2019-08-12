@@ -2,6 +2,7 @@ package com.liugdxd.zoomeye.common.controller;
 
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
+import com.liugdxd.zoomeye.common.ZoomeyeConstant;
 import com.liugdxd.zoomeye.common.controller.dto.LoginDto;
 import com.liugdxd.zoomeye.common.controller.util.CommonResult;
 import com.liugdxd.zoomeye.common.controller.util.TokenHelper;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(value = "LoginController|登录控制器")
 public class LoginController {
 
-    private static final String LOGIN_URL="https://api.zoomeye.org/user/login";
+    private static final String LOGIN_URL="/user/login";
 
     @ApiOperation(value="登录", notes="登录获取token")
     @PostMapping("/login")
@@ -37,7 +38,7 @@ public class LoginController {
     public CommonResult  login(@RequestBody LoginDto param){
         String response = "";
         try {
-            response = OKHttpUtil.executePostHttpConn(LOGIN_URL, JSONUtil.toJsonStr(param));
+            response = OKHttpUtil.getInstance().executePostHttpConn(ZoomeyeConstant.COMMON_URL+LOGIN_URL, JSONUtil.toJsonStr(param));
             log.info("response is {}",response);
         } catch (Exception e) {
             return CommonResult.failed("调用失败");

@@ -1,9 +1,9 @@
 package com.liugdxd.zoomeye.util;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+
+import java.io.IOException;
 
 @Slf4j
 public class OKHttpUtil {
@@ -40,23 +40,44 @@ public class OKHttpUtil {
         okHttpClient.newCall(request).enqueue(callback);
     }
 
-    public static String executePostHttpConn(String url, String message) throws Exception{
+    public String executePostHttpConn(String url, String message) throws Exception{
         String result = "";
         try {
             log.info("===============OKHTTP请求报文：{}",message);
             //interfaceLogin(url,message);
             MediaType json  = MediaType.parse("application/json;charset=utf-8");
-            OkHttpClient client;
-            client = new OkHttpClient.Builder()
-                    .readTimeout(100, TimeUnit.SECONDS)
-                    .build();
 
             RequestBody requestBody = RequestBody.create(json, message);
             Request request = new Request.Builder()
                     .url(url)
                     .post(requestBody)
                     .build();
-            Response response = client.newCall(request).execute();
+            Response response = okHttpClient.newCall(request).execute();
+            if(response.isSuccessful()){
+                result  = response.body().string();
+            }else{
+                result = response.message();
+            }
+        } catch (IOException e) {
+            log.error("http请求异常{}",url, e);
+            throw e;
+        }
+        log.info("===============OKHTTP返回报文body：{}"+result);
+        return result;
+    }
+
+    public  String executeGetHttpConn(String url,Headers headers) throws Exception{
+        String result = "";
+        try {
+            MediaType json  = MediaType.parse("application/json;charset=utf-8");
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .headers(headers)
+                    .get()
+                    .build();
+            Response response = okHttpClient.newCall(request).execute();
+
             if(response.isSuccessful()){
                 result  = response.body().string();
             }else{
