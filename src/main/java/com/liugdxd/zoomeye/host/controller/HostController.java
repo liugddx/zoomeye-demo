@@ -1,13 +1,18 @@
 package com.liugdxd.zoomeye.host.controller;
 
+import cn.hutool.core.net.NetUtil;
+import com.alibaba.fastjson.JSON;
 import com.liugdxd.zoomeye.common.ZoomeyeConstant;
 import com.liugdxd.zoomeye.common.controller.util.CommonResult;
 import com.liugdxd.zoomeye.common.controller.util.TokenHelper;
+import com.liugdxd.zoomeye.es.bo.ZoomeyeData;
+import com.liugdxd.zoomeye.service.IZoomeyeService;
 import com.liugdxd.zoomeye.util.OKHttpUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import okhttp3.Headers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +28,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HostController {
 
     private static final String QUERY = "/host/search";
+
+    @Autowired
+    private IZoomeyeService zoomeyeService;
+
     @ApiOperation("查询数据")
     @GetMapping("/search")
     @ResponseBody
@@ -35,7 +44,13 @@ public class HostController {
         } catch (Exception e) {
            return CommonResult.failed("查询失败");
         }
-        return CommonResult.success(com.alibaba.fastjson.JSON.parseObject(response));
+
+        ZoomeyeData zoomeyeData = JSON.parseObject(response, ZoomeyeData.class);
+
+        ZoomeyeData save = zoomeyeService.save(zoomeyeData);
+
+
+        return CommonResult.success(save);
     }
 
 

@@ -1,18 +1,37 @@
 
 package com.liugdxd.zoomeye.es.bo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ZoomeyeData {
+/**
+ * <p>@description 钟馗之眼查询对应bo<p/>
+ * @author liugd
+ */
+@Document(indexName = "zoomeyedata")
+public class ZoomeyeData implements Serializable {
 
+    @Id
+    private Integer id;
     private Integer total;
     private Integer available;
     private List<Match> matches = new ArrayList<Match>();
     private Facets facets;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getTotal() {
         return total;
