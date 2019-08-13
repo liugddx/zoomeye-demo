@@ -1,8 +1,5 @@
 package com.liugdxd.zoomeye.host.controller;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.liugdxd.zoomeye.common.ZoomeyeConstant;
 import com.liugdxd.zoomeye.common.controller.util.CommonResult;
 import com.liugdxd.zoomeye.common.controller.util.TokenHelper;
@@ -11,7 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import okhttp3.Headers;
-import okhttp3.internal.http2.Header;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +35,7 @@ public class HostController {
         } catch (Exception e) {
            return CommonResult.failed("查询失败");
         }
-
-        return CommonResult.success(response);
+        return CommonResult.success(com.alibaba.fastjson.JSON.parseObject(response));
     }
 
 
