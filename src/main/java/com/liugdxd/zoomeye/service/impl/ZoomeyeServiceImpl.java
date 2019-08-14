@@ -1,10 +1,12 @@
 package com.liugdxd.zoomeye.service.impl;
 
-import com.liugdxd.zoomeye.es.bo.ZoomeyeData;
+import com.liugdxd.zoomeye.es.bo.Match;
 import com.liugdxd.zoomeye.es.repository.ZoomeyeRepository;
 import com.liugdxd.zoomeye.service.IZoomeyeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>@ClassName ZoomeyeServiceImpl</p>
@@ -19,8 +21,15 @@ public class ZoomeyeServiceImpl implements IZoomeyeService {
 
     @Autowired
     private ZoomeyeRepository zoomeyeRepository;
+
     @Override
-    public ZoomeyeData save(ZoomeyeData zoomeyeData) {
-        return zoomeyeRepository.save(zoomeyeData);
+    public Match save(Match match) {
+        return zoomeyeRepository.save(match);
+    }
+
+    @Override
+    public long bathSave(List<Match> matches) {
+        zoomeyeRepository.saveAll(matches);
+        return zoomeyeRepository.count();
     }
 }

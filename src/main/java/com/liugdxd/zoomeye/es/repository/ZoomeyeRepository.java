@@ -1,6 +1,6 @@
 package com.liugdxd.zoomeye.es.repository;
 
-import com.liugdxd.zoomeye.es.bo.ZoomeyeData;
+import com.liugdxd.zoomeye.es.bo.Match;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @date 2019/8/13 17:10
  */
 @Repository
-public interface ZoomeyeRepository extends ElasticsearchRepository<ZoomeyeData, String> {
+public interface ZoomeyeRepository extends ElasticsearchRepository<Match, String> {
 
 }

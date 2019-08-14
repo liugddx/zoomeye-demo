@@ -1,6 +1,8 @@
 package com.liugdxd.zoomeye.service;
 
-import com.liugdxd.zoomeye.es.bo.ZoomeyeData;
+import com.liugdxd.zoomeye.es.bo.Match;
+
+import java.util.List;
 
 /**
  * <p>@ClassName ZoomeyeService</p>
@@ -14,8 +16,15 @@ public interface IZoomeyeService {
 
     /**
      * 保存ZoomeyeData到es
-     * @param zoomeyeData
+     * @param match
      * @return
      */
-    ZoomeyeData save(ZoomeyeData zoomeyeData);
+    Match save(Match match);
+
+    /**
+     * 批量查询匹配数据
+     * @param matches
+     * @return
+     */
+    long bathSave(List<Match> matches);
 }

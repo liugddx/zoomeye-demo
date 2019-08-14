@@ -1,6 +1,5 @@
 package com.liugdxd.zoomeye.host.controller;
 
-import cn.hutool.core.net.NetUtil;
 import com.alibaba.fastjson.JSON;
 import com.liugdxd.zoomeye.common.ZoomeyeConstant;
 import com.liugdxd.zoomeye.common.controller.util.CommonResult;
@@ -42,15 +41,12 @@ public class HostController {
             Headers headers = new Headers.Builder().add("Authorization", "JWT " + TokenHelper.getInstance().getToken()).build();
             response = OKHttpUtil.getInstance().executeGetHttpConn(ZoomeyeConstant.COMMON_URL+QUERY+"?query="+query,headers);
         } catch (Exception e) {
-           return CommonResult.failed("查询失败");
+            return CommonResult.failed("查询失败");
         }
 
         ZoomeyeData zoomeyeData = JSON.parseObject(response, ZoomeyeData.class);
 
-        ZoomeyeData save = zoomeyeService.save(zoomeyeData);
-
-
-        return CommonResult.success(save);
+        return CommonResult.success(zoomeyeService.bathSave(zoomeyeData.getMatches()));
     }
 
 

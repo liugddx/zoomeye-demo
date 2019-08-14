@@ -1,11 +1,21 @@
 
 package com.liugdxd.zoomeye.es.bo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Match {
+/**
+ * @author liugd
+ */
+@Document(indexName = "zoomeyedata")
+public class Match implements Serializable {
 
+    @Id
+    private Integer id;
     private Protocol protocol;
     private String rdns;
     private String ip;
@@ -14,6 +24,14 @@ public class Match {
     private String timestamp;
     private String honeypotLastupdate;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Protocol getProtocol() {
         return protocol;
